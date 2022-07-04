@@ -2,13 +2,7 @@ import axios from "axios";
 
 const PIXABAY_KEY = "28403201-b05b1c74044ac0f199d732ec5"
 
-// export const fetchPhotos = async (searchValue, page, per_page) => {
-
 axios.defaults.baseURL = "https://pixabay.com/api/"
-
-//     const { data } = await axios.get(`?${options}`)
-//     return data
-// }
 
 export class GetFotoPixabay {
     constructor() {

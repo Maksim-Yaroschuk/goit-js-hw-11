@@ -1,10 +1,7 @@
-// import { fetchPhotos } from "./get-foto";
 import { Notify } from 'notiflix';
 import { GetFotoPixabay } from "./get-foto"
 import simpleLightbox from 'simplelightbox';
 import "simplelightbox/dist/simple-lightbox.min.css"
-
-// let inputValue = ""
 
 const gallery = document.querySelector(".gallery")
 const search = document.querySelector(".search-form")
@@ -44,7 +41,7 @@ async function onSubmitForm(event) {
   event.preventDefault()
   clear()
   const inputValue = event.target.elements.searchQuery.value
-console.log(inputValue)
+    console.log(inputValue)
 
   getFotoPixabay.searchValue1 = inputValue
   
@@ -59,13 +56,8 @@ console.log(inputValue)
     renderMarkup(hits)
     lightbox.refresh()
   } catch (error) { Notify.failure(error.message) }
-  // console.log(hits)
-  // console.log(totalHits)
 
-
-  // event.target.elements.searchQuery.value = ""
   event.target.reset()
-// return inputValue = event.target.elements.searchQuery.value
 }
 
 function clear() {
@@ -78,14 +70,13 @@ async function onLoadMorePhotos() {
     renderMarkup(hits)
     lightbox.refresh()
 
-    const { height: cardHeight } = document
-  .querySelector(".gallery")
-  .firstElementChild.getBoundingClientRect();
+    const { height: cardHeight } = document.querySelector(".gallery")
+      .firstElementChild.getBoundingClientRect();
 
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: "smooth",
+    });
 
     } catch (error) { Notify.failure(error.message) }
 }
