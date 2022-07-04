@@ -19,3 +19,12 @@ body {
   margin-bottom: 16px;
 }
 
+.gallery {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo-card {
+  margin: 10px;
+}
