@@ -18,20 +18,20 @@ export class GetFotoPixabay {
             image_type: "photo",
             orientation: "horizontal",
             safesearch: true,
-            per_page: 6,
+            per_page: 40,
             page: this.page,
 })
 
         const { data } = await axios.get(`?${options}`)
         this.incrPage()
-        return data 
+        return data
     }
 
-    get searchValue1() {
+    get inputValue() {
         return this.searchValue
     }
 
-    set searchValue1(newSearchValue) {
+    set inputValue(newSearchValue) {
         this.searchValue = newSearchValue
     }
 

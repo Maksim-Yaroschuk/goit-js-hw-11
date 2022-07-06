@@ -12,6 +12,58 @@ loadMoreButton.addEventListener("click", onLoadMorePhotos)
 
 const getFotoPixabay = new GetFotoPixabay()
 
+async function onSubmitForm(event) {
+  event.preventDefault()
+  clear()
+  const inputValue = event.target.elements.searchQuery.value
+    console.log(inputValue)
+
+  getFotoPixabay.inputValue = inputValue
+  
+  try {
+    const { hits, total } = await getFotoPixabay.fetchPhotos()
+  if (total === 0) {
+    Notify.warning("Sorry, there are no images matching your search query. Please try again.")
+    event.target.reset()
+    return
+  }
+    Notify.success(`Hooray! We found ${total} images.`)
+    renderMarkup(hits)
+    loadMoreButton.classList.remove("hide")
+    lightbox.refresh()
+  } catch (error) { Notify.failure(error.message) }
+
+  event.target.reset()
+}
+
+async function onLoadMorePhotos() {
+  try {
+  const { hits, totalHits } = await getFotoPixabay.fetchPhotos()
+    renderMarkup(hits)
+    lightbox.refresh()
+    console.log(page)
+
+    const { height: cardHeight } = document.querySelector(".gallery")
+      .firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: "smooth",
+    });
+
+    } catch (error) { Notify.failure(error.message) }
+}
+
+function clear() {
+  gallery.innerHTML = ""
+  loadMoreButton.classList.add("hide")
+  getFotoPixabay.resetPage()
+}
+
+function renderMarkup(images) {
+  gallery.insertAdjacentHTML("beforeend", createdMarkup(images))
+}
+
 function createdMarkup(images) {
   return images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<div class="photo-card">
            <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" />
@@ -33,58 +85,20 @@ function createdMarkup(images) {
             </div>`).join("")
 }
 
-function renderMarkup(images) {
-  gallery.insertAdjacentHTML("beforeend", createdMarkup(images))
-}
-
-async function onSubmitForm(event) {
-  event.preventDefault()
-  clear()
-  const inputValue = event.target.elements.searchQuery.value
-    console.log(inputValue)
-
-  getFotoPixabay.searchValue1 = inputValue
-  
-  try {
-    const { hits, totalHits } = await getFotoPixabay.fetchPhotos()
-  if (totalHits === 0) {
-    Notify.warning("Sorry, there are no images matching your search query. Please try again.")
-    event.target.reset()
-    return
+function checkingOfLoadingMore(hits, total, currentPage) {
+  if ((total / hits) >= currentPage) {
+    loadMoreButton.classList.add("hide")
   }
-    Notify.success(`Hooray! We found ${totalHits} images.`)
-    renderMarkup(hits)
-    lightbox.refresh()
-  } catch (error) { Notify.failure(error.message) }
-
-  event.target.reset()
-}
-
-function clear() {
-  gallery.innerHTML = ""
-}
-
-async function onLoadMorePhotos() {
-  try {
-  const { hits, totalHits } = await getFotoPixabay.fetchPhotos()
-    renderMarkup(hits)
-    lightbox.refresh()
-
-    const { height: cardHeight } = document.querySelector(".gallery")
-      .firstElementChild.getBoundingClientRect();
-
-    window.scrollBy({
-      top: cardHeight * 2,
-      behavior: "smooth",
-    });
-
-    } catch (error) { Notify.failure(error.message) }
 }
 
 const lightbox = new SimpleLightbox('.gallery a', { 
   captionsData: "alt",
   captionDelay: 500,
  });
+
+
+
+
 
 // const search = document.querySelector(".search-form")
 
@@ -141,6 +155,8 @@ const lightbox = new SimpleLightbox('.gallery a', {
 //   gallery.insertAdjacentHTML('afterbegin', markup)
 //   }).join("")
 // }
+
+// тимориіромиіаоимр
 
 // function onLoadMore() {
 //   page +=1
