@@ -8,21 +8,22 @@ export class GetFotoPixabay {
     constructor() {
         this.searchValue = ""
         this.page = 1
+        this.per_page = 40
     }
 
     async fetchPhotos() {
        
-        const options = new URLSearchParams({
+        const params = new URLSearchParams({
             key: PIXABAY_KEY,
             q: this.searchValue,
             image_type: "photo",
             orientation: "horizontal",
             safesearch: true,
-            per_page: 40,
+            per_page: this.per_page,
             page: this.page,
 })
 
-        const { data } = await axios.get(`?${options}`)
+        const { data } = await axios.get(`?${params}`)
         this.incrPage()
         return data
     }
@@ -36,7 +37,7 @@ export class GetFotoPixabay {
     }
 
     incrPage() {
-       this.page +=1
+        this.page += 1
     }
 
     resetPage() {

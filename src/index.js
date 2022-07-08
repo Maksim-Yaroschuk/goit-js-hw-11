@@ -6,31 +6,64 @@ import "simplelightbox/dist/simple-lightbox.min.css"
 const gallery = document.querySelector(".gallery")
 const search = document.querySelector(".search-form")
 const loadMoreButton = document.querySelector(".load-more")
+const checkboxActInfScr = document.getElementById("activate-infinity-scroll")
+
+// console.log(checkboxActInfScr)
+// console.log(loadMoreButton)
+
 
 search.addEventListener("submit", onSubmitForm)
 loadMoreButton.addEventListener("click", onLoadMorePhotos)
 
-const getFotoPixabay = new GetFotoPixabay()
+let activateInfinityScroll = false
 
+const getFotoPixabay = new GetFotoPixabay()
+const lightbox = new SimpleLightbox('.gallery a', { 
+  captionsData: "alt",
+  captionDelay: 500,
+});
+
+if (activateInfinityScroll) {
+  loadMoreButton.classList.add("hide")
+const options = {
+  rootMargin: "200px",
+  treshold: 1.0,
+}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      console.log("observe")
+      onLoadMorePhotos()
+    }
+  })
+}, options)
+
+observer.observe(loadMoreButton)
+}
+  
 async function onSubmitForm(event) {
   event.preventDefault()
   clear()
+  activateInfinityScroll = checkboxActInfScr.checked
   const inputValue = event.target.elements.searchQuery.value
-    console.log(inputValue)
 
   getFotoPixabay.inputValue = inputValue
   
   try {
-    const { hits, total } = await getFotoPixabay.fetchPhotos()
-  if (total === 0) {
+    const { hits, totalHits  } = await getFotoPixabay.fetchPhotos()
+  if (totalHits === 0) {
     Notify.warning("Sorry, there are no images matching your search query. Please try again.")
     event.target.reset()
     return
   }
-    Notify.success(`Hooray! We found ${total} images.`)
+    Notify.success(`Hooray! We found ${totalHits} images.`)
     renderMarkup(hits)
-    loadMoreButton.classList.remove("hide")
     lightbox.refresh()
+    
+    const totalPages = totalHits / getFotoPixabay.per_page
+  if(totalPages > 1) {
+    loadMoreButton.classList.remove("hide")
+  }  
   } catch (error) { Notify.failure(error.message) }
 
   event.target.reset()
@@ -38,11 +71,16 @@ async function onSubmitForm(event) {
 
 async function onLoadMorePhotos() {
   try {
-  const { hits, totalHits } = await getFotoPixabay.fetchPhotos()
+    const { hits, totalHits } = await getFotoPixabay.fetchPhotos()
     renderMarkup(hits)
     lightbox.refresh()
-    console.log(page)
 
+    const totalPages = totalHits / getFotoPixabay.per_page
+  if(getFotoPixabay.page > totalPages) {
+      loadMoreButton.classList.add("hide")
+      Notify.warning("We're sorry, but you've reached the end of search results.")
+  }
+    
     const { height: cardHeight } = document.querySelector(".gallery")
       .firstElementChild.getBoundingClientRect();
 
@@ -84,95 +122,3 @@ function createdMarkup(images) {
             </div>
             </div>`).join("")
 }
-
-function checkingOfLoadingMore(hits, total, currentPage) {
-  if ((total / hits) >= currentPage) {
-    loadMoreButton.classList.add("hide")
-  }
-}
-
-const lightbox = new SimpleLightbox('.gallery a', { 
-  captionsData: "alt",
-  captionDelay: 500,
- });
-
-
-
-
-
-// const search = document.querySelector(".search-form")
-
-// const loadMoreButton = document.querySelector(".load-more")
-// let markup = ""
-// let page
-// let per_page = 40
-// let inputValue = ""
-
-// search.addEventListener("submit", onSubmitForm)
-// loadMoreButton.addEventListener("click", onLoadMore)
-
-// function onSubmitForm(event) {
-//   event.preventDefault();
-//   page = 1
-//   inputValue = event.target.elements.searchQuery.value
-  
-//   fetchPhotos(inputValue, page, per_page)
-//     .then((images) => {
-//       console.log(images.hits.length)
-//       console.log(images)
-//       // if(images.hits.length === 0){
-//       //   Notify.failure("Sorry, there are no images matching your search query. Please try again.")
-//       //   gallery.innerHTML = ""
-//       //   return
-//       // }
-//       //   gallery.innerHTML = ""
-//       //   renderImages(images.hits)
-//       })
-//     .catch(error => console.log(error))
-  
-// }
-
-// function renderImages(images) {
-  
-//   images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => { 
-//   markup = `<div class="photo-card">
-//             <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-//             <div class="info">
-//             <p class="info-item">
-//             <b>Likes: ${likes}</b>
-//             </p>
-//             <p class="info-item">
-//             <b>Views: ${views}</b>
-//             </p>
-//             <p class="info-item">
-//             <b>Comments: ${comments}</b>
-//             </p>
-//             <p class="info-item">
-//             <b>Downloads: ${downloads}</b>
-//             </p>
-//             </div>
-//             </div>`
-//   gallery.insertAdjacentHTML('afterbegin', markup)
-//   }).join("")
-// }
-
-// тимориіромиіаоимр
-
-// function onLoadMore() {
-//   page +=1
-//   console.log(page)  
-
-//     fetchPhotos(inputValue, page, per_page)
-//     .then((images) => {
-//       console.log(images.hits.length)
-//       console.log(images)
-//       // if(images.hits.length === 0){
-//       //   Notify.failure("Sorry, there are no images matching your search query. Please try again.")
-//       //   gallery.innerHTML = ""
-//       //   return
-//       // }
-//       //   gallery.innerHTML = ""
-//       //   renderImages(images.hits)
-//       })
-//     .catch(error => console.log(error))
-// }
