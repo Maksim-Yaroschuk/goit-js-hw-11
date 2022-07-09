@@ -8,14 +8,8 @@ const search = document.querySelector(".search-form")
 const loadMoreButton = document.querySelector(".load-more")
 const checkboxActInfScr = document.getElementById("activate-infinity-scroll")
 
-// console.log(checkboxActInfScr)
-// console.log(loadMoreButton)
-
-
 search.addEventListener("submit", onSubmitForm)
 loadMoreButton.addEventListener("click", onLoadMorePhotos)
-
-let activateInfinityScroll = false
 
 const getFotoPixabay = new GetFotoPixabay()
 const lightbox = new SimpleLightbox('.gallery a', { 
@@ -23,8 +17,6 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 500,
 });
 
-if (activateInfinityScroll) {
-  loadMoreButton.classList.add("hide")
 const options = {
   rootMargin: "200px",
   treshold: 1.0,
@@ -37,16 +29,13 @@ const observer = new IntersectionObserver(entries => {
     }
   })
 }, options)
-
-observer.observe(loadMoreButton)
-}
   
 async function onSubmitForm(event) {
   event.preventDefault()
   clear()
-  activateInfinityScroll = checkboxActInfScr.checked
-  const inputValue = event.target.elements.searchQuery.value
+  infinityScroll()
 
+  const inputValue = event.target.elements.searchQuery.value
   getFotoPixabay.inputValue = inputValue
   
   try {
@@ -80,14 +69,7 @@ async function onLoadMorePhotos() {
       loadMoreButton.classList.add("hide")
       Notify.warning("We're sorry, but you've reached the end of search results.")
   }
-    
-    const { height: cardHeight } = document.querySelector(".gallery")
-      .firstElementChild.getBoundingClientRect();
-
-    window.scrollBy({
-      top: cardHeight * 2,
-      behavior: "smooth",
-    });
+    smoothScrolling()
 
     } catch (error) { Notify.failure(error.message) }
 }
@@ -96,6 +78,24 @@ function clear() {
   gallery.innerHTML = ""
   loadMoreButton.classList.add("hide")
   getFotoPixabay.resetPage()
+}
+
+function infinityScroll() {
+const activateInfinityScroll = checkboxActInfScr.checked
+  if (activateInfinityScroll) {
+    loadMoreButton.classList.add("hide")
+    observer.observe(loadMoreButton)
+  }
+}
+
+function smoothScrolling() {
+    const { height: cardHeight } = document.querySelector(".gallery")
+      .firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: "smooth",
+    });
 }
 
 function renderMarkup(images) {
