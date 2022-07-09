@@ -1,17 +1,11 @@
-import { renderMarkup, clearMarkup } from "./markup"
+import { refs } from "./refs"
+import { renderMarkup } from "./markup"
 import { smoothScrolling } from "./smooth-scroll"
 import { Notify } from 'notiflix';
 import { getFotoPixabay } from "./get-foto"
 import { lightbox } from "./initial-lightbox";
-// import { GetFotoPixabay } from "./get-foto"
-import simpleLightbox from 'simplelightbox';
-import "simplelightbox/dist/simple-lightbox.min.css"
 
-// const getFotoPixabay = new GetFotoPixabay()
-const lightbox = new SimpleLightbox('.gallery a', { 
-  captionsData: "alt",
-  captionDelay: 500,
-});
+const { loadMoreButton } = refs
 
 async function onLoadMorePhotos() {
   try {

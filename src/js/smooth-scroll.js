@@ -1,5 +1,5 @@
 import { refs } from "./refs"
-const { gallery, search, loadMoreButton, checkboxActInfScr } = refs
+const { gallery } = refs
 
 function smoothScrolling() {
     const { height: cardHeight } = gallery

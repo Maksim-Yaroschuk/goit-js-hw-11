@@ -1,6 +1,6 @@
 import { onLoadMorePhotos } from "./load-more";
 import { refs } from "./refs"
-const { gallery, search, loadMoreButton, checkboxActInfScr } = refs
+const { loadMoreButton, checkboxActInfScr } = refs
 
 const options = {
   rootMargin: "200px",

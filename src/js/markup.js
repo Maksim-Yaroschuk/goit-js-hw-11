@@ -1,9 +1,6 @@
-// import { GetFotoPixabay } from "./get-foto"
 import {getFotoPixabay} from "./get-foto"
 import { refs } from "./refs"
-const { gallery, search, loadMoreButton, checkboxActInfScr } = refs
-// const gallery = document.querySelector(".gallery")
-// const getFotoPixabay = new GetFotoPixabay()
+const { gallery, loadMoreButton } = refs
 
 const createdMarkup = (images) => {
   return images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<div class="photo-card">

@@ -5,5 +5,3 @@ export const refs = {
     checkboxActInfScr: document.getElementById("activate-infinity-scroll"),
 }
 
-// export { refs }
-
