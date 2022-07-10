@@ -1,6 +1,5 @@
 import { onLoadMorePhotos } from "./load-more";
 import { loadMoreButton, checkboxActInfScr } from "./refs"
-// const { loadMoreButton, checkboxActInfScr } = refs
 
 const options = {
   rootMargin: "200px",

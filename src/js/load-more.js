@@ -5,8 +5,6 @@ import { Notify } from 'notiflix';
 import { getFotoPixabay } from "./get-foto"
 import { lightbox } from "./initial-lightbox";
 
-// const { loadMoreButton } = refs
-
 async function onLoadMorePhotos() {
   try {
     const { hits, totalHits } = await getFotoPixabay.fetchPhotos()

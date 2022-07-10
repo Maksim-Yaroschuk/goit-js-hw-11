@@ -6,8 +6,6 @@ import { onLoadMorePhotos } from "./js/load-more";
 import { lightbox } from "./js/initial-lightbox";
 import { Notify } from 'notiflix';
 
-// const { search, loadMoreButton } = refs
-
 search.addEventListener("submit", onSubmitForm)
 loadMoreButton.addEventListener("click", onLoadMorePhotos)
   
