@@ -1,11 +1,11 @@
-import { refs } from "./refs"
+import { loadMoreButton } from "./refs"
 import { renderMarkup } from "./markup"
 import { smoothScrolling } from "./smooth-scroll"
 import { Notify } from 'notiflix';
 import { getFotoPixabay } from "./get-foto"
 import { lightbox } from "./initial-lightbox";
 
-const { loadMoreButton } = refs
+// const { loadMoreButton } = refs
 
 async function onLoadMorePhotos() {
   try {

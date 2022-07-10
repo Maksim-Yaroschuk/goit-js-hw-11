@@ -1,5 +1,6 @@
-import { refs } from "./refs"
-const { gallery } = refs
+import { gallery } from "./refs"
+
+// const { gallery } = refs
 
 function smoothScrolling() {
     const { height: cardHeight } = gallery

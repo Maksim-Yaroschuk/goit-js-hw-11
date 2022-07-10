@@ -1,6 +1,6 @@
 import { onLoadMorePhotos } from "./load-more";
-import { refs } from "./refs"
-const { loadMoreButton, checkboxActInfScr } = refs
+import { loadMoreButton, checkboxActInfScr } from "./refs"
+// const { loadMoreButton, checkboxActInfScr } = refs
 
 const options = {
   rootMargin: "200px",
@@ -10,14 +10,14 @@ const options = {
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      console.log("observe")
       onLoadMorePhotos()
     }
   })
 }, options)
 
 function infinityScroll() {
-const activateInfinityScroll = checkboxActInfScr.checked
+  const activateInfinityScroll = checkboxActInfScr.checked
+  observer.unobserve(loadMoreButton) 
   if (activateInfinityScroll) {
     loadMoreButton.classList.add("hide")
     observer.observe(loadMoreButton)

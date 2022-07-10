@@ -1,12 +1,12 @@
-import { refs } from "./js/refs"
-import {getFotoPixabay} from "./js/get-foto"
+import { search, loadMoreButton } from "./js/refs"
+import { getFotoPixabay } from "./js/get-foto"
 import { renderMarkup, clearMarkup } from "./js/markup"
 import { infinityScroll } from "./js/observer";
 import { onLoadMorePhotos } from "./js/load-more";
 import { lightbox } from "./js/initial-lightbox";
 import { Notify } from 'notiflix';
 
-const { search, loadMoreButton } = refs
+// const { search, loadMoreButton } = refs
 
 search.addEventListener("submit", onSubmitForm)
 loadMoreButton.addEventListener("click", onLoadMorePhotos)
@@ -14,8 +14,8 @@ loadMoreButton.addEventListener("click", onLoadMorePhotos)
 async function onSubmitForm(event) {
   event.preventDefault()
   clearMarkup()
-  infinityScroll()
-
+    infinityScroll()
+    
   const inputValue = event.target.elements.searchQuery.value
   getFotoPixabay.inputValue = inputValue
   

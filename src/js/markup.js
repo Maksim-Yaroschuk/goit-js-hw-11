@@ -1,6 +1,6 @@
 import {getFotoPixabay} from "./get-foto"
-import { refs } from "./refs"
-const { gallery, loadMoreButton } = refs
+import { gallery, loadMoreButton } from "./refs"
+// const { gallery, loadMoreButton } = refs
 
 const createdMarkup = (images) => {
   return images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<div class="photo-card">
