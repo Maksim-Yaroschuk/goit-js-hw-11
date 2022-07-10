@@ -3,7 +3,7 @@ import { gallery, loadMoreButton } from "./refs"
 
 const createdMarkup = (images) => {
   return images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<div class="photo-card">
-           <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" />
+           <a href="${largeImageURL}"><img src="${webformatURL}" class="photo-img" alt="${tags}" loading="lazy" /></a>
             <div class="info">
             <p class="info-item">
             <b>Likes: ${likes}</b>
@@ -17,7 +17,7 @@ const createdMarkup = (images) => {
             <p class="info-item">
             <b>Downloads: ${downloads}</b>
             </p>
-            </a>
+            
             </div>
             </div>`).join("")
 }

@@ -19,16 +19,49 @@ body {
   margin-bottom: 16px;
 }
 
+.search-field {
+  display: flex;
+  align-items: center;
+justify-content: center;
+height: 50px;
+background-color: blue;
+}
+
+.search-form {
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.search-form__items {
+  margin-left: 10px;
+}
+
 .gallery {
   margin: 20px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
 }
+
+/* .gallery__image {
+  width: 350px;
+} */
 
 .photo-card {
   margin: 10px;
 }
 
+.photo-img {
+  max-width: 250px;
+  max-height: 225px;
+}
+
 .hide {
   display: none;
+}
+
+.info-item {
+  margin: 5px;
 }
