@@ -14,8 +14,12 @@ async function onSubmitForm(event) {
   clearMarkup()
     infinityScroll()
     
-  const inputValue = event.target.elements.searchQuery.value
+  const inputValue = event.target.elements.searchQuery.value.trim()
   getFotoPixabay.inputValue = inputValue
+  if (inputValue === "") {
+    Notify.failure("Please enter a search query")
+    return
+  }
   
   try {
     const { hits, totalHits  } = await getFotoPixabay.fetchPhotos()
